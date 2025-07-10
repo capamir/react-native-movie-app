@@ -17,7 +17,6 @@ import { images } from "@/constants/images";
 
 import MovieCard from "@/components/MovieCard";
 import SearchBar from "@/components/SearchBar";
-import { useEffect } from "react";
 // import TrendingCard from "@/components/TrendingCard";
 
 const Index = () => {
@@ -34,9 +33,7 @@ const Index = () => {
     loading: moviesLoading,
     error: moviesError,
   } = useFetch(() => fetchMovies({ query: "" }));
-  useEffect(() => {
-    console.log(moviesError)
-  }, [moviesError])
+  
   return (
     <View className="flex-1 bg-primary">
       <Image

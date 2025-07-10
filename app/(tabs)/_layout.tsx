@@ -3,13 +3,20 @@ import { images } from "@/constants/images";
 import { Tabs } from "expo-router";
 import { Image, ImageBackground, Text, View } from "react-native";
 
-function TabIcon({ focused, icon, title }: any) {
+function TabIcon({ focused, icon, title }: any) { 
   if (focused) {
     return (
       <ImageBackground
-        source={images.highlight}
-        className="flex flex-row w-full min-w-[112px] min-h-14 mt-4 pb-1 justify-center items-center rounded-full overflow-hidden"
-      >
+          source={images.highlight}
+          className="flex flex-row w-full min-w-[112px] min-h-14 mt-3 pb-1 justify-center items-center rounded-full overflow-hidden"
+          style={{
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.2,
+            shadowRadius: 6,
+            elevation: 5,
+          }}
+        >
         <Image source={icon} tintColor="#151312" className="size-5" />
         <Text className="text-secondary text-base font-semibold ml-1">
           {title}

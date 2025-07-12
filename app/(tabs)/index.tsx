@@ -10,29 +10,21 @@ import {
 
 import { fetchMovies } from "@/services/api";
 import useFetch from "@/services/usefetch";
-// import { getTrendingMovies } from "@/services/appwrite";
 
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 
 import MovieCard from "@/components/MovieCard";
 import SearchBar from "@/components/SearchBar";
-// import TrendingCard from "@/components/TrendingCard";
 
 const Index = () => {
   const router = useRouter();
-
-  // const {
-  //   data: trendingMovies,
-  //   loading: trendingLoading,
-  //   error: trendingError,
-  // } = useFetch(getTrendingMovies);
 
   const {
     data: movies,
     loading: moviesLoading,
     error: moviesError,
-  } = useFetch(() => fetchMovies({ query: "" }));
+  } = useFetch(() => fetchMovies(""));
   
   return (
     <View className="flex-1 bg-primary">
@@ -66,35 +58,24 @@ const Index = () => {
               placeholder="Search for a movie"
             />
 
-            {/* {trendingMovies && (
-              <View className="mt-10">
-                <Text className="text-lg text-white font-bold mb-3">
-                  Trending Movies
-                </Text>
-                <FlatList
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  className="mb-4 mt-3"
-                  data={trendingMovies}
-                  contentContainerStyle={{
-                    gap: 26,
-                  }}
-                  renderItem={({ item, index }) => (
-                    <TrendingCard movie={item} index={index} />
-                  )}
-                  keyExtractor={(item) => item.movie_id.toString()}
-                  ItemSeparatorComponent={() => <View className="w-4" />}
-                />
-              </View>
-            )} */}
-
             <>
               <Text className="text-lg text-white font-bold mt-5 mb-3">
                 Latest Movies
               </Text>
 
               <FlatList
-                data={movies}
+                data={movies?.map(movie => ({
+                  id: movie.id,
+                  image: movie.image || null,
+                  title: movie.title,
+                  vote_average: movie.rating,
+                  release_date: movie.created_at,
+                  plot_summary: movie.plot_summary,
+                  rating: movie.rating,
+                  genres: movie.genres,
+                  actors: movie.actors,
+                  created_at: movie.created_at,
+                }))}
                 renderItem={({ item }) => <MovieCard {...item} />}
                 keyExtractor={(item) => item.id.toString()}
                 numColumns={3}
@@ -107,6 +88,8 @@ const Index = () => {
                 className="mt-2 pb-32"
                 scrollEnabled={false}
               />
+
+
             </>
           </View>
         )}
